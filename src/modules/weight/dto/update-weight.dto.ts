@@ -1,4 +1,19 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateWeightDto } from './create-weight.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class UpdateWeightDto extends PartialType(CreateWeightDto) {}
+export class UpdateWeightDto {
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  name: string;
+
+  @ApiProperty()
+  @IsNumber()
+  @IsOptional()
+  from: number;
+
+  @ApiProperty()
+  @IsNumber()
+  @IsOptional()
+  to: number;
+}

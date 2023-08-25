@@ -1,4 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateRankingDto } from './create-ranking.dto';
+import { FightResultEnums } from '../../fight/enums/fight-result.enums';
 
-export class UpdateRankingDto extends PartialType(CreateRankingDto) {}
+export class UpdateRankingDto {
+  type: FightResultEnums;
+  winner: boolean;
+  isDraw: boolean;
+}

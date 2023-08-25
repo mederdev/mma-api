@@ -1,4 +1,17 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateFightDto } from './create-fight.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsOptional } from 'class-validator';
+export class UpdateFightDto {
+  @ApiProperty({
+    description: 'Fighter id from DB',
+  })
+  @IsNumber()
+  @IsOptional()
+  fighterOne: number;
 
-export class UpdateFightDto extends PartialType(CreateFightDto) {}
+  @ApiProperty({
+    description: 'Fighter id from DB',
+  })
+  @IsNumber()
+  @IsOptional()
+  fighterTwo: number;
+}

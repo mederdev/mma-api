@@ -1,34 +1,33 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { RankingService } from './ranking.service';
-import { CreateRankingDto } from './dto/create-ranking.dto';
-import { UpdateRankingDto } from './dto/update-ranking.dto';
+import { ListParamsDto } from '../../common/dto/list-params.dto';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { RankingDto } from './dto/ranking.dto';
+import { FighterEntity } from '../../entities/fighter.entity';
 
+@ApiTags('ranking')
 @Controller('ranking')
 export class RankingController {
   constructor(private readonly rankingService: RankingService) {}
 
-  @Post()
-  create(@Body() createRankingDto: CreateRankingDto) {
-    return this.rankingService.create(createRankingDto);
+  @ApiOperation({ summary: 'Get fighters ranking by weight' })
+  @ApiResponse({ type: RankingDto })
+  @Get('weight/:id')
+  ratingByWeight(@Param('id', ParseIntPipe) id: number) {
+    return this.rankingService.ratingByWeight(id);
   }
 
-  @Get()
-  findAll() {
-    return this.rankingService.findAll();
+  @ApiOperation({ summary: 'Get fighters rating by P4P' })
+  @ApiResponse({ type: RankingDto })
+  @Get('pound-for-pound')
+  ratingAll(@Query() listParams: ListParamsDto) {
+    return this.rankingService.ratingAll(listParams);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.rankingService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRankingDto: UpdateRankingDto) {
-    return this.rankingService.update(+id, updateRankingDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.rankingService.remove(+id);
+  @ApiOperation({ summary: 'Get fighter stats by id' })
+  @ApiResponse({ type: RankingDto })
+  @Get('fighter/:id')
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.rankingService.findByFighter(id);
   }
 }

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class DeleteResult {
+export class DeleteResultDto {
   @ApiProperty()
   deleted: boolean;
 }
